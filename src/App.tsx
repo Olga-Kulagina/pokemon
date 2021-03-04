@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {getPokemonThunkCreator} from './redux/pokemonReducer';
+import {AppRootStateType} from './redux/redux-store';
+import {Spin} from 'antd';
+import {PokemonCard} from './components/PokemonCard/PokemonCard';
+import s from './App.module.css'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getPokemonThunkCreator())
+    }, [dispatch])
+
+    let isLoading = useSelector<AppRootStateType, boolean>(state => state.pokemon.isLoading)
+    let pokemon = useSelector<AppRootStateType, any>(state => state.pokemon.pokemon)
+
+    return (
+        <div className="App">
+            {isLoading ?
+                <Spin/>
+                : <div className={s.pokemonList}>
+                    {
+                        pokemon.map((p: any, index: number) => <PokemonCard key={index} name={p.name}
+                                                                            pokemonNumber={index + 1}/>)
+                    }
+                </div>
+            }
+        </div>
+    );
 }
 
 export default App;
