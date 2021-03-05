@@ -3,7 +3,7 @@ import {Card} from 'antd';
 
 type PokemonCardPropsType = {
     name: string
-    pokemonNumber: number
+    number: number
 }
 
 export const PokemonCard = (props: PokemonCardPropsType) => {
@@ -12,9 +12,9 @@ export const PokemonCard = (props: PokemonCardPropsType) => {
         <Card
             hoverable
             style={{ width: 240, margin: 5, textAlign: 'center' }}
-            cover={<img alt="pokemon" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${props.pokemonNumber}.png`} />}
+            cover={<img alt={props.name} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${props.number}.png`} />}
         >
-            <Meta title={props.name.charAt(0).toUpperCase() + props.name.slice(1)} />
+            <Meta title={props.name} />
         </Card>
     )
 }

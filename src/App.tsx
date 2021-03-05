@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {getPokemonThunkCreator} from './redux/pokemonReducer';
+import {getPokemonThunkCreator, PokemonShortType} from './redux/pokemonReducer';
 import {AppRootStateType} from './redux/redux-store';
 import {Spin} from 'antd';
 import {PokemonCard} from './components/PokemonCard/PokemonCard';
@@ -14,7 +14,7 @@ function App() {
     }, [dispatch])
 
     let isLoading = useSelector<AppRootStateType, boolean>(state => state.pokemon.isLoading)
-    let pokemon = useSelector<AppRootStateType, any>(state => state.pokemon.pokemon)
+    let pokemonList = useSelector<AppRootStateType, any>(state => state.pokemon.pokemonList)
 
     return (
         <div className="App">
@@ -22,8 +22,8 @@ function App() {
                 <Spin/>
                 : <div className={s.pokemonList}>
                     {
-                        pokemon.map((p: any, index: number) => <PokemonCard key={index} name={p.name}
-                                                                            pokemonNumber={index + 1}/>)
+                        pokemonList.map((p: PokemonShortType) => <PokemonCard key={p.number} name={p.name}
+                                                                            number={p.number}/>)
                     }
                 </div>
             }
