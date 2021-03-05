@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/components/AllPokemon/AllPokemon.module.css"],"names":[],"mappings":"AAAA,+BACI,YAAa,CACb,cAAe,CACf,sBACJ","file":"main.8573ae52.chunk.css","sourcesContent":[".pokemonList {\n    display: flex;\n    flex-wrap: wrap;\n    justify-content: center;\n}"]}
