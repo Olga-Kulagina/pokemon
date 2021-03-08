@@ -5,20 +5,22 @@ type initialStateType = typeof initialState
 
 type SetPokemonDataType = ReturnType<typeof setPokemonData>
 type SetDisplayPokemonType = ReturnType<typeof setDisplayPokemon>
-type SetIsLoadingAppType = ReturnType<typeof setIsLoadingApp>
+type SetIsLoadingDisplayPokemonType = ReturnType<typeof setIsLoadingDisplayPokemon>
 type SetIsLoadingPokemonPageType = ReturnType<typeof setIsLoadingPokemonPage>
 type SetIsLoadingPokemonListType = ReturnType<typeof setIsLoadingPokemonList>
 type SetPokemonInfoType = ReturnType<typeof setPokemonInfo>
-type SetPagesType = ReturnType<typeof setPages>
+type SetPageNumberType = ReturnType<typeof setPageNumber>
+type SetTotalPokemonType = ReturnType<typeof setTotalPokemon>
 
 type ActionsType =
     SetPokemonDataType
     | SetDisplayPokemonType
-    | SetIsLoadingAppType
+    | SetIsLoadingDisplayPokemonType
     | SetIsLoadingPokemonPageType
     | SetIsLoadingPokemonListType
     | SetPokemonInfoType
-    | SetPagesType
+    | SetPageNumberType
+    | SetTotalPokemonType
 
 export type PokemonShortType = {
     name: string
@@ -32,10 +34,10 @@ export type PokeApiShortType = {
 const initialState = {
     pokemonList: [] as Array<PokemonShortType>,
     displayPokemon: [] as Array<PokemonShortType>,
-    nextPage: '',
-    previousPage: '',
+    pageNumber: 1,
+    totalPokemon: 0,
     pokemonInfo: {},
-    isLoadingApp: true,
+    isLoadingDisplayPokemon: true,
     isLoadingPokemonPage: true,
     isLoadingPokemonList: true
 }
@@ -62,22 +64,26 @@ export const pokemonReducer = (state: initialStateType = initialState, action: A
             })
             return {...state, displayPokemon: pokemonList}
         }
-        case 'SET_PAGES': {
-            return {...state, nextPage: action.next, previousPage: action.previous}
+        case 'SET_PAGE_NUMBER': {
+            console.log(action.pageNumber)
+            return {...state, pageNumber: action.pageNumber}
         }
         case 'SET_POKEMON_INFO': {
             let newName = action.data.name.charAt(0).toUpperCase() + action.data.name.slice(1)
             console.log(action.data)
             return {...state, pokemonInfo: {...action.data, name: newName}}
         }
-        case 'SET_IS_LOADING_APP': {
-            return {...state, isLoadingApp: action.isLoadingApp}
+        case 'SET_IS_LOADING_DISPLAY_POKEMON': {
+            return {...state, isLoadingDisplayPokemon: action.isLoadingDisplayPokemon}
         }
         case 'SET_IS_LOADING_POKEMON_PAGE': {
             return {...state, isLoadingPokemonPage: action.isLoadingPokemonPage}
         }
         case 'SET_IS_LOADING_POKEMON_LIST': {
             return {...state, isLoadingPokemonList: action.isLoadingPokemonList}
+        }
+        case 'SET_TOTAL_POKEMON': {
+            return {...state, totalPokemon: action.total}
         }
         default: {
             return state
@@ -93,7 +99,10 @@ export const setDisplayPokemon = (pokeApiList: Array<PokeApiShortType>) => ({
     type: 'SET_DISPLAY_POKEMON',
     pokeApiList
 } as const)
-export const setIsLoadingApp = (isLoadingApp: boolean) => ({type: 'SET_IS_LOADING_APP', isLoadingApp} as const)
+export const setIsLoadingDisplayPokemon = (isLoadingDisplayPokemon: boolean) => ({
+    type: 'SET_IS_LOADING_DISPLAY_POKEMON',
+    isLoadingDisplayPokemon
+} as const)
 export const setIsLoadingPokemonPage = (isLoadingPokemonPage: boolean) => ({
     type: 'SET_IS_LOADING_POKEMON_PAGE',
     isLoadingPokemonPage
@@ -103,7 +112,8 @@ export const setIsLoadingPokemonList = (isLoadingPokemonList: boolean) => ({
     isLoadingPokemonList
 } as const)
 export const setPokemonInfo = (data: any) => ({type: 'SET_POKEMON_INFO', data} as const)
-export const setPages = (next: string, previous: string) => ({type: 'SET_PAGES', next, previous} as const)
+export const setPageNumber = (pageNumber: number) => ({type: 'SET_PAGE_NUMBER', pageNumber} as const)
+export const setTotalPokemon = (total: number) => ({type: 'SET_TOTAL_POKEMON', total} as const)
 
 export const getAllPokemonListThunkCreator = () => (dispatch: Dispatch) => {
     dispatch(setIsLoadingPokemonList(true))
@@ -111,6 +121,7 @@ export const getAllPokemonListThunkCreator = () => (dispatch: Dispatch) => {
         .then((res) => {
             console.log(res.data.results)
             dispatch(setPokemonData(res.data.results))
+            dispatch(setTotalPokemon(res.data.count))
         })
         .catch((err) => {
             console.log(err)
@@ -120,19 +131,18 @@ export const getAllPokemonListThunkCreator = () => (dispatch: Dispatch) => {
         })
 }
 
-export const getPokemonThunkCreator = () => (dispatch: Dispatch) => {
-    dispatch(setIsLoadingApp(true))
-    pokemonAPI.getPokemon()
+export const getPokemonThunkCreator = (pageNumber: number) => (dispatch: Dispatch) => {
+    dispatch(setIsLoadingDisplayPokemon(true))
+    pokemonAPI.getPokemon(pageNumber)
         .then((res) => {
             console.log(res)
             dispatch(setDisplayPokemon(res.data.results))
-            dispatch(setPages(res.data.next, res.data.previous))
         })
         .catch((err) => {
             console.log(err)
         })
         .finally(() => {
-            dispatch(setIsLoadingApp(false))
+            dispatch(setIsLoadingDisplayPokemon(false))
         })
 }
 

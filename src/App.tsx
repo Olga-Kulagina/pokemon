@@ -4,9 +4,10 @@ import {PokemonPage} from './components/PokemonPage/PokemonPage';
 import {Error404} from './components/Error404/Error404';
 import {AllPokemon} from './components/AllPokemon/AllPokemon';
 import {getAllPokemonListThunkCreator, getPokemonThunkCreator} from './redux/pokemonReducer';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Navigation} from './components/Navigation/Navigation';
 import {PokemonList} from './components/PokemonList/PokemonList';
+import {AppRootStateType} from './redux/redux-store';
 
 export const PATH = {
     ALLPOKEMON: "/all",
@@ -17,8 +18,13 @@ export const PATH = {
 function App() {
     const dispatch = useDispatch()
 
+    let pageNumber = useSelector<AppRootStateType, number>(state => state.pokemon.pageNumber)
+
     useEffect(() => {
-        dispatch(getPokemonThunkCreator())
+        dispatch(getPokemonThunkCreator(pageNumber))
+    }, [dispatch, pageNumber])
+
+    useEffect(() => {
         dispatch(getAllPokemonListThunkCreator())
     }, [dispatch])
 

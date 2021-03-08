@@ -5,25 +5,26 @@ import {PokemonShortType} from '../../redux/pokemonReducer';
 import {Spin} from 'antd';
 import {PokemonCard} from '../PokemonCard/PokemonCard';
 import s from './AllPokemon.module.css'
+import {Paginator} from '../Paginator/Paginator';
 
 export const AllPokemon = () => {
 
 
-    let isLoadingApp = useSelector<AppRootStateType, boolean>(state => state.pokemon.isLoadingApp)
+    let isLoadingDisplayPokemon = useSelector<AppRootStateType, boolean>(state => state.pokemon.isLoadingDisplayPokemon)
     let displayPokemon = useSelector<AppRootStateType, any>(state => state.pokemon.displayPokemon)
 
     return (
         <div>
-            {isLoadingApp ?
+            {isLoadingDisplayPokemon ?
                 <Spin/>
                 : <div style={{textAlign: 'center'}}>
                     <div className={s.pokemonList}>
                         {
                             displayPokemon.map((p: PokemonShortType) => <PokemonCard key={p.id} name={p.name}
-                                                                                  id={p.id}/>)
+                                                                                     id={p.id}/>)
                         }
-
                     </div>
+                    <Paginator />
                 </div>
             }
         </div>
