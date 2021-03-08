@@ -3,12 +3,15 @@ import {Redirect, Route, Switch } from 'react-router-dom';
 import {PokemonPage} from './components/PokemonPage/PokemonPage';
 import {Error404} from './components/Error404/Error404';
 import {AllPokemon} from './components/AllPokemon/AllPokemon';
-import {getPokemonThunkCreator} from './redux/pokemonReducer';
+import {getAllPokemonListThunkCreator, getPokemonThunkCreator} from './redux/pokemonReducer';
 import {useDispatch} from 'react-redux';
+import {Navigation} from './components/Navigation/Navigation';
+import {PokemonList} from './components/PokemonList/PokemonList';
 
 export const PATH = {
     ALLPOKEMON: "/all",
     POKEMONPAGE: '/pokemon/:id',
+    POKEMONlIST: '/list'
 }
 
 function App() {
@@ -16,14 +19,17 @@ function App() {
 
     useEffect(() => {
         dispatch(getPokemonThunkCreator())
+        dispatch(getAllPokemonListThunkCreator())
     }, [dispatch])
 
     return (
         <div className="App">
+            <Navigation />
             <Switch>
                 <Route path={"/"} exact render={() => <Redirect to={PATH.ALLPOKEMON}/>}/>
 
                 <Route path={PATH.ALLPOKEMON} render={() => <AllPokemon />}/>
+                <Route path={PATH.POKEMONlIST} render={() => <PokemonList />}/>
                 <Route path={PATH.POKEMONPAGE} render={() => <PokemonPage />}/>
 
                 <Route render={() => <Error404/>}/>

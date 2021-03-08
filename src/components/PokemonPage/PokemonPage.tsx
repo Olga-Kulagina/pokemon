@@ -31,7 +31,7 @@ export const PokemonPage = () => {
                     <p>Type: {pokemonInfo.types.map((item: any, index: number) => {
                         switch(item.type.name) {
                             case 'grass': {
-                                return <Tag key={index} color='green'>{item.type.name}</Tag>
+                                return <Tag style={{fontSize: '14px', padding: '5px 10px'}} key={index} color='green'>{item.type.name}</Tag>
                             }
                             case 'poison': {
                                 return <Tag style={{fontSize: '14px', padding: '5px 10px'}} key={index} color='purple'>{item.type.name}</Tag>

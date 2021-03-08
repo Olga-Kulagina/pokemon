@@ -1,0 +1,20 @@
+.pokemonList {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    height: 13500px;
+    text-align: center;
+    align-content: center;
+}
+
+@media all and (max-width: 830px) {
+    .pokemonList {
+        height: 20000px;
+    }
+}
+
+@media all and (max-width: 550px) {
+    .pokemonList {
+        height: 39200px;
+    }
+}

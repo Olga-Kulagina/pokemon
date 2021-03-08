@@ -10,7 +10,7 @@ export const AllPokemon = () => {
 
 
     let isLoadingApp = useSelector<AppRootStateType, boolean>(state => state.pokemon.isLoadingApp)
-    let pokemonList = useSelector<AppRootStateType, any>(state => state.pokemon.pokemonList)
+    let displayPokemon = useSelector<AppRootStateType, any>(state => state.pokemon.displayPokemon)
 
     return (
         <div>
@@ -19,7 +19,7 @@ export const AllPokemon = () => {
                 : <div style={{textAlign: 'center'}}>
                     <div className={s.pokemonList}>
                         {
-                            pokemonList.map((p: PokemonShortType) => <PokemonCard key={p.id} name={p.name}
+                            displayPokemon.map((p: PokemonShortType) => <PokemonCard key={p.id} name={p.name}
                                                                                   id={p.id}/>)
                         }
 
