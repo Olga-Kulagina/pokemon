@@ -14,10 +14,11 @@ export const AllPokemon = () => {
     let displayPokemon = useSelector<AppRootStateType, any>(state => state.pokemon.displayPokemon)
 
     return (
-        <div>
+        <>
             {isLoadingDisplayPokemon ?
-                <Spin/>
+                <div className={s.spin}><Spin/></div>
                 : <div style={{textAlign: 'center'}}>
+                    <h1>Pokédex</h1>
                     <div className={s.pokemonList}>
                         {
                             displayPokemon.map((p: PokemonShortType) => <PokemonCard key={p.id} name={p.name}
@@ -27,6 +28,6 @@ export const AllPokemon = () => {
                     <Paginator />
                 </div>
             }
-        </div>
+        </>
     )
 }

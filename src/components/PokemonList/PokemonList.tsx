@@ -12,9 +12,9 @@ export const PokemonList = () => {
     let pokemonList = useSelector<AppRootStateType, any>(state => state.pokemon.pokemonList)
 
     return (
-        <div>
+        <>
             {isLoadingPokemonList ?
-                <Spin/>
+                <div className={s.spin}><Spin/></div>
                 : <div>
                     <div className={s.pokemonList}>
                         {
@@ -25,6 +25,6 @@ export const PokemonList = () => {
                 </div>
             }
 
-        </div>
+        </>
     )
 }

@@ -9,6 +9,9 @@ export const pokemonAPI = {
     },
     getPokemonInfo(id: number) {
         return axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
+    },
+    getEvolutionChain(url: string) {
+        return axios.get(url)
     }
 }
 

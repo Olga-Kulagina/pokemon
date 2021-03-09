@@ -65,12 +65,10 @@ export const pokemonReducer = (state: initialStateType = initialState, action: A
             return {...state, displayPokemon: pokemonList}
         }
         case 'SET_PAGE_NUMBER': {
-            console.log(action.pageNumber)
             return {...state, pageNumber: action.pageNumber}
         }
         case 'SET_POKEMON_INFO': {
             let newName = action.data.name.charAt(0).toUpperCase() + action.data.name.slice(1)
-            console.log(action.data)
             return {...state, pokemonInfo: {...action.data, name: newName}}
         }
         case 'SET_IS_LOADING_DISPLAY_POKEMON': {
@@ -119,7 +117,6 @@ export const getAllPokemonListThunkCreator = () => (dispatch: Dispatch) => {
     dispatch(setIsLoadingPokemonList(true))
     pokemonAPI.getPokemonList()
         .then((res) => {
-            console.log(res.data.results)
             dispatch(setPokemonData(res.data.results))
             dispatch(setTotalPokemon(res.data.count))
         })
@@ -135,7 +132,6 @@ export const getPokemonThunkCreator = (pageNumber: number) => (dispatch: Dispatc
     dispatch(setIsLoadingDisplayPokemon(true))
     pokemonAPI.getPokemon(pageNumber)
         .then((res) => {
-            console.log(res)
             dispatch(setDisplayPokemon(res.data.results))
         })
         .catch((err) => {

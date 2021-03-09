@@ -1,0 +1,111 @@
+.spin {
+    display: flex;
+    justify-content: center;
+    height: 200px;
+    align-items: center;
+}
+
+.name {
+    text-align: center;
+}
+
+.pictureAndInfo {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.picture img {
+    width: 400px;
+    margin-right: 10px;
+}
+
+.info {
+    width: 400px;
+}
+
+.infoRow {
+    display: flex;
+    margin-bottom: 11px;
+    align-items: center;
+}
+
+.characteristic {
+    font-weight: 500;
+    margin-right: 10px;
+}
+
+.abilitiesFlex {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.abilities {
+    font-size: 14px;
+    padding: 3px 8px;
+    border: 1px solid #c7c7d0;
+    border-radius: 2px;
+    color: #090c28;
+    background: #fcf6f6;
+    margin: 2px 4px;
+    white-space: nowrap;
+}
+
+.infoStatsHeader {
+    text-align: center;
+}
+
+.progressBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.progress {
+    display: flex;
+}
+
+.progressLabel {
+    font-weight: 500;
+    width: 110px;
+}
+
+.progressBar {
+    width: 290px;
+}
+
+.navigation {
+    text-align: center;
+}
+.navigation Button {
+    margin: 10px;
+}
+
+@media all and (max-width: 500px) {
+    .picture img {
+        width: 300px;
+        margin-right: 0px;
+    }
+    .info {
+        width: 300px;
+    }
+    .progressBar {
+        width: 190px;
+    }
+}
+@media all and (max-width: 350px) {
+    .name {
+        font-size: 16px;
+    }
+    .picture img {
+        width: 200px;
+        margin-right: 0px;
+    }
+    .info {
+        width: 200px;
+        font-size: 12px;
+    }
+    .progressBar {
+        width: 90px;
+    }
+}
