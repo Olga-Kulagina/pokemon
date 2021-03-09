@@ -9,7 +9,6 @@ import {Paginator} from '../Paginator/Paginator';
 
 export const AllPokemon = () => {
 
-
     let isLoadingDisplayPokemon = useSelector<AppRootStateType, boolean>(state => state.pokemon.isLoadingDisplayPokemon)
     let displayPokemon = useSelector<AppRootStateType, any>(state => state.pokemon.displayPokemon)
 

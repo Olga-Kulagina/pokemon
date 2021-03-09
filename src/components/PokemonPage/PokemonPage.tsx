@@ -7,6 +7,7 @@ import {Button, Progress, Spin, Tag} from 'antd';
 import s from './PokemonPage.module.css'
 
 export const PokemonPage = () => {
+
     const dispatch = useDispatch()
     //@ts-ignore
     let {id} = useParams()

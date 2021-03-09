@@ -11,6 +11,7 @@ type SetIsLoadingPokemonListType = ReturnType<typeof setIsLoadingPokemonList>
 type SetPokemonInfoType = ReturnType<typeof setPokemonInfo>
 type SetPageNumberType = ReturnType<typeof setPageNumber>
 type SetTotalPokemonType = ReturnType<typeof setTotalPokemon>
+type SetSomeErrorType = ReturnType<typeof setSomeError>
 
 type ActionsType =
     SetPokemonDataType
@@ -21,6 +22,7 @@ type ActionsType =
     | SetPokemonInfoType
     | SetPageNumberType
     | SetTotalPokemonType
+    | SetSomeErrorType
 
 export type PokemonShortType = {
     name: string
@@ -39,7 +41,8 @@ const initialState = {
     pokemonInfo: {},
     isLoadingDisplayPokemon: true,
     isLoadingPokemonPage: true,
-    isLoadingPokemonList: true
+    isLoadingPokemonList: true,
+    someError: false
 }
 
 export const pokemonReducer = (state: initialStateType = initialState, action: ActionsType): initialStateType => {
@@ -83,6 +86,9 @@ export const pokemonReducer = (state: initialStateType = initialState, action: A
         case 'SET_TOTAL_POKEMON': {
             return {...state, totalPokemon: action.total}
         }
+        case 'SET_SOME_ERROR': {
+            return {...state, someError: action.error}
+        }
         default: {
             return state
         }
@@ -112,6 +118,9 @@ export const setIsLoadingPokemonList = (isLoadingPokemonList: boolean) => ({
 export const setPokemonInfo = (data: any) => ({type: 'SET_POKEMON_INFO', data} as const)
 export const setPageNumber = (pageNumber: number) => ({type: 'SET_PAGE_NUMBER', pageNumber} as const)
 export const setTotalPokemon = (total: number) => ({type: 'SET_TOTAL_POKEMON', total} as const)
+export const setSomeError = (error: boolean) => {
+    return {type: 'SET_SOME_ERROR', error} as const
+}
 
 export const getAllPokemonListThunkCreator = () => (dispatch: Dispatch) => {
     dispatch(setIsLoadingPokemonList(true))
@@ -121,7 +130,7 @@ export const getAllPokemonListThunkCreator = () => (dispatch: Dispatch) => {
             dispatch(setTotalPokemon(res.data.count))
         })
         .catch((err) => {
-            console.log(err)
+            dispatch(setSomeError(true))
         })
         .finally(() => {
             dispatch(setIsLoadingPokemonList(false))
@@ -135,7 +144,7 @@ export const getPokemonThunkCreator = (pageNumber: number) => (dispatch: Dispatc
             dispatch(setDisplayPokemon(res.data.results))
         })
         .catch((err) => {
-            console.log(err)
+            dispatch(setSomeError(true))
         })
         .finally(() => {
             dispatch(setIsLoadingDisplayPokemon(false))
@@ -149,7 +158,7 @@ export const setPokemonInfoThunkCreator = (id: number) => (dispatch: Dispatch) =
             dispatch(setPokemonInfo(res.data))
         })
         .catch((err) => {
-            console.log(err)
+            dispatch(setSomeError(true))
         })
         .finally(() => {
             dispatch(setIsLoadingPokemonPage(false))

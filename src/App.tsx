@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Navigation} from './components/Navigation/Navigation';
 import {PokemonList} from './components/PokemonList/PokemonList';
 import {AppRootStateType} from './redux/redux-store';
+import {Result} from 'antd';
 
 export const PATH = {
     ALLPOKEMON: "/all",
@@ -19,6 +20,7 @@ function App() {
     const dispatch = useDispatch()
 
     let pageNumber = useSelector<AppRootStateType, number>(state => state.pokemon.pageNumber)
+    let someError = useSelector<AppRootStateType, boolean>(state => state.pokemon.someError)
 
     useEffect(() => {
         dispatch(getPokemonThunkCreator(pageNumber))
@@ -31,15 +33,21 @@ function App() {
     return (
         <div className="App">
             <Navigation />
-            <Switch>
-                <Route path={"/"} exact render={() => <Redirect to={PATH.ALLPOKEMON}/>}/>
+            {someError ?
+                <Result
+                    status="500"
+                    subTitle="Sorry, something went wrong."
+                /> :
+                <Switch>
+                    <Route path={"/"} exact render={() => <Redirect to={PATH.ALLPOKEMON}/>}/>
 
-                <Route path={PATH.ALLPOKEMON} render={() => <AllPokemon />}/>
-                <Route path={PATH.POKEMONlIST} render={() => <PokemonList />}/>
-                <Route path={PATH.POKEMONPAGE} render={() => <PokemonPage />}/>
+                    <Route path={PATH.ALLPOKEMON} render={() => <AllPokemon />}/>
+                    <Route path={PATH.POKEMONlIST} render={() => <PokemonList />}/>
+                    <Route path={PATH.POKEMONPAGE} render={() => <PokemonPage />}/>
 
-                <Route render={() => <Error404/>}/>
-            </Switch>
+                    <Route render={() => <Error404/>}/>
+                </Switch>
+            }
         </div>
     );
 }

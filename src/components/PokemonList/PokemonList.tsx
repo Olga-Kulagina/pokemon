@@ -9,7 +9,7 @@ import s from './PokemonList.module.css'
 export const PokemonList = () => {
 
     let isLoadingPokemonList = useSelector<AppRootStateType, boolean>(state => state.pokemon.isLoadingPokemonList)
-    let pokemonList = useSelector<AppRootStateType, any>(state => state.pokemon.pokemonList)
+    let pokemonList = useSelector<AppRootStateType, Array<PokemonShortType>>(state => state.pokemon.pokemonList)
 
     return (
         <>
